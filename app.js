@@ -93,40 +93,6 @@ function renderDefinitions() {
   byId("definitionGrid").replaceChildren(...items);
 }
 
-function renderApiMcpExplainer() {
-  const explainer = state.data.apiMcpExplainer;
-  const layers = explainer.layers.map((item) =>
-    node("article", { class: "integration-layer" }, [
-      node("div", { class: "integration-layer-head" }, [
-        node("span", { class: "integration-level", text: item.level }),
-        node("h4", { text: item.name }),
-      ]),
-      node("strong", { class: "integration-question", text: item.question }),
-      node("p", { text: item.definition }),
-      node("div", { class: "integration-path", text: item.example }),
-    ]),
-  );
-
-  byId("apiMcpExplainer").replaceChildren(
-    node("div", { class: "integration-head" }, [
-      node("span", { class: "fig-label", text: "два уровня интеграции" }),
-      node("h3", { id: "apiMcpTitle", text: explainer.title }),
-      node("p", { text: explainer.lead }),
-    ]),
-    node("div", { class: "integration-layers" }, layers),
-    node("div", { class: "integration-relation" }, [
-      node("p", {}, [
-        node("strong", { text: "Связь · " }),
-        document.createTextNode(explainer.relationship),
-      ]),
-      node("p", {}, [
-        node("strong", { text: "Доступ · " }),
-        document.createTextNode(explainer.permissions),
-      ]),
-    ]),
-  );
-}
-
 function conceptById(id) {
   return state.data.concepts.find((concept) => concept.id === id);
 }
@@ -394,7 +360,6 @@ function renderAll() {
   renderFlow();
   renderMetrics();
   renderDefinitions();
-  renderApiMcpExplainer();
   renderConceptMap();
   renderConceptList();
   renderProgramFilters();
