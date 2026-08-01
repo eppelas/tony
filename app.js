@@ -13,7 +13,7 @@ const categoryLabels = {
   work: "рабочие",
   platform: "платформы",
   voice: "голос",
-  connector: "коннекторы",
+  connector: "подключения",
   workflow: "архитектура",
 };
 
@@ -52,10 +52,6 @@ function node(tag, attrs = {}, children = []) {
   return element;
 }
 
-function formatEvidence(evidence = []) {
-  return evidence.join(" · ");
-}
-
 function showToast(message) {
   const toast = byId("toast");
   toast.textContent = message;
@@ -88,23 +84,47 @@ function renderMetrics() {
 }
 
 function renderDefinitions() {
-  const items = state.data.definitions.map((item) => {
-    const sourceLabel =
-      item.sourceKind === "dialogue-definition"
-        ? "определено в диалоге"
-        : item.sourceKind === "editorial-clarification"
-          ? "редакторское уточнение"
-          : "синтез по диалогу";
-    return node("article", { class: "definition" }, [
+  const items = state.data.definitions.map((item) =>
+    node("article", { class: "definition" }, [
       node("h4", { text: item.term }),
       node("p", { text: item.definition }),
-      node("div", { class: "definition-meta" }, [
-        node("span", { class: "evidence-chip", text: formatEvidence(item.evidence) }),
-        node("span", { class: "source-kind", text: sourceLabel }),
-      ]),
-    ]);
-  });
+    ]),
+  );
   byId("definitionGrid").replaceChildren(...items);
+}
+
+function renderApiMcpExplainer() {
+  const explainer = state.data.apiMcpExplainer;
+  const layers = explainer.layers.map((item) =>
+    node("article", { class: "integration-layer" }, [
+      node("div", { class: "integration-layer-head" }, [
+        node("span", { class: "integration-level", text: item.level }),
+        node("h4", { text: item.name }),
+      ]),
+      node("strong", { class: "integration-question", text: item.question }),
+      node("p", { text: item.definition }),
+      node("div", { class: "integration-path", text: item.example }),
+    ]),
+  );
+
+  byId("apiMcpExplainer").replaceChildren(
+    node("div", { class: "integration-head" }, [
+      node("span", { class: "fig-label", text: "два уровня интеграции" }),
+      node("h3", { id: "apiMcpTitle", text: explainer.title }),
+      node("p", { text: explainer.lead }),
+    ]),
+    node("div", { class: "integration-layers" }, layers),
+    node("div", { class: "integration-relation" }, [
+      node("p", {}, [
+        node("strong", { text: "Связь · " }),
+        document.createTextNode(explainer.relationship),
+      ]),
+      node("p", {}, [
+        node("strong", { text: "Доступ · " }),
+        document.createTextNode(explainer.permissions),
+      ]),
+    ]),
+  );
 }
 
 function conceptById(id) {
@@ -131,7 +151,7 @@ function renderConceptMap() {
       type: "button",
       dataset: { conceptId: concept.id },
       style: `left:${position[0]}%;top:${position[1]}%`,
-      title: `${concept.title}: ${formatEvidence(concept.evidence)}`,
+      title: concept.title,
     });
     button.addEventListener("click", () => focusConcept(concept.id));
     return button;
@@ -143,7 +163,7 @@ function renderConceptList() {
   const query = state.conceptQuery.trim().toLocaleLowerCase("ru");
   const filtered = state.data.concepts.filter((concept) => {
     const relationNames = concept.links.map((id) => conceptById(id)?.title || "").join(" ");
-    return [concept.title, concept.summary, relationNames, concept.evidence.join(" ")]
+    return [concept.title, concept.summary, relationNames]
       .join(" ")
       .toLocaleLowerCase("ru")
       .includes(query);
@@ -169,7 +189,6 @@ function renderConceptList() {
       node("summary", {}, [
         node("span", { class: "concept-index", text: String(index).padStart(2, "0") }),
         node("span", { class: "concept-title", text: concept.title }),
-        node("span", { class: "timestamp", text: formatEvidence(concept.evidence) }),
       ]),
       node("div", { class: "concept-body" }, [
         node("p", { text: concept.summary }),
@@ -223,12 +242,6 @@ function renderPrograms() {
       node("strong", { class: "program-name", text: item.name }),
       node("span", { class: "category-tag", text: item.categoryLabel }),
       node("p", { class: "program-role", text: item.role }),
-      node("span", {
-        class: "confidence",
-        text: item.confidence === "high" ? "уверенно" : "восстановлено",
-        dataset: { level: item.confidence },
-        title: `Таймкоды: ${formatEvidence(item.evidence)}`,
-      }),
     ]),
   );
   byId("programList").replaceChildren(...rows);
@@ -240,7 +253,6 @@ function renderUseCases() {
       node("span", { class: "fig-label", text: `сценарий / ${String(index + 1).padStart(2, "0")}` }),
       node("h3", { text: item.title }),
       node("p", { text: item.description }),
-      node("div", { class: "evidence-chip", text: formatEvidence(item.evidence) }),
       node("p", { class: "risk-note" }, [
         node("strong", { text: "безопасный старт · " }),
         document.createTextNode(item.risk),
@@ -351,33 +363,6 @@ function renderDeepChallenges() {
   byId("deepChallengeGrid").replaceChildren(...items);
 }
 
-function renderTimeline() {
-  const items = state.data.timeline.map((item) =>
-    node("article", { class: "timeline-item", dataset: { public: item.public } }, [
-      node("span", { class: "timeline-time", text: `${item.start}—${item.end}` }),
-      node("div", { class: "timeline-copy" }, [
-        node("h3", { text: item.title }),
-        node("p", { text: item.note }),
-      ]),
-      node("span", {
-        class: "public-state",
-        text: item.public === "safe" ? "прямой вывод" : "обезличено",
-      }),
-    ]),
-  );
-  byId("timeline").replaceChildren(...items);
-}
-
-function renderPrivacy() {
-  const privacy = state.data.privacy;
-  byId("privacyNote").replaceChildren(
-    node("span", { class: "fig-label", text: "privacy boundary" }),
-    node("h3", { text: privacy.headline }),
-    node("p", { text: privacy.note }),
-    node("ul", { class: "excluded-list" }, privacy.excluded.map((item) => node("li", { text: item }))),
-  );
-}
-
 function wireNavigation() {
   const navLinks = [...document.querySelectorAll(".section-nav a")];
   const sections = navLinks
@@ -409,6 +394,7 @@ function renderAll() {
   renderFlow();
   renderMetrics();
   renderDefinitions();
+  renderApiMcpExplainer();
   renderConceptMap();
   renderConceptList();
   renderProgramFilters();
@@ -417,8 +403,6 @@ function renderAll() {
   loadHomeworkProgress();
   renderHomework();
   renderDeepChallenges();
-  renderTimeline();
-  renderPrivacy();
   wireNavigation();
   wireConceptSearch();
 }
@@ -435,7 +419,7 @@ async function init() {
       node("section", { class: "section" }, [
         node("div", {
           class: "empty-state",
-          text: "Данные не загрузились. Откройте проект через локальный preview launcher или HTTP-сервер.",
+          text: "Материалы не загрузились. Обновите страницу и попробуйте ещё раз.",
         }),
       ]),
     );
