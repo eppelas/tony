@@ -1,0 +1,13 @@
+transcript.txt
+summary.txt
+homework.txt
+source/
+reports/
+*.log
+*.pid
+*.app/
+*.command
+.preview_server.py
+.DS_Store
+TASK_VERIFICATION_CANVAS.md
+FILE_OPERATIONS_LOG.md

@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f0e6" />
+    <meta
+      name="description"
+      content="Концепции агентной работы, инструменты и практическая домашка по материалам 57-минутного диалога."
+    />
+    <title>Агентный режим — диалог, концепции, практика</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f5f0e6'/%3E%3Cpath d='M8 33h14l7-15 9 28 7-13h11' fill='none' stroke='%23c4493e' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='26' fill='none' stroke='%23191814' stroke-width='2'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="paper-grid" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">К содержанию</a>
+
+    <header class="hero" id="top">
+      <div class="hero-rail">
+        <a class="brand" href="#top" aria-label="Агентный режим, начало страницы">
+          <span aria-hidden="true">&gt;</span>
+          <span>agent_mode/01</span>
+        </a>
+        <div class="hero-meta">
+          <span>29.07.2026</span>
+          <span>57:16</span>
+          <span>public edition</span>
+        </div>
+      </div>
+
+      <div class="hero-body">
+        <div class="hero-copy">
+          <p class="eyebrow">контекст · действия · память · практика</p>
+          <h1>
+            <span>агентный</span>
+            <span class="accent-word">режим</span>
+          </h1>
+          <p class="hero-deck">
+            От диалога с моделью — к системе, которая помнит проект, действует в заданных границах и оставляет проверяемый результат.
+          </p>
+        </div>
+
+        <div class="signal-machine" aria-label="Контекст превращается в артефакт через агента и действие">
+          <div class="signal-orbit" aria-hidden="true">
+            <span class="orbit orbit-a"></span>
+            <span class="orbit orbit-b"></span>
+            <span class="pulse-core"></span>
+          </div>
+          <ol id="flowList" class="flow-list"></ol>
+        </div>
+      </div>
+
+      <div id="metricGrid" class="metric-grid" aria-label="Ключевые показатели"></div>
+    </header>
+
+    <nav class="section-nav" aria-label="Разделы дашборда">
+      <a href="#overview"><span>00</span>Контур</a>
+      <a href="#concepts"><span>01</span>Концепции</a>
+      <a href="#programs"><span>02</span>Инструменты</a>
+      <a href="#practice"><span>03</span>Примеры</a>
+      <a href="#homework"><span>04</span>Домашка</a>
+      <a href="#evidence"><span>05</span>Таймлайн</a>
+    </nav>
+
+    <main id="main">
+      <section class="section" id="overview">
+        <div class="section-intro">
+          <span class="section-number">00</span>
+          <div>
+            <p class="eyebrow">рабочая формула</p>
+            <h2>Контекст превращается в действие только внутри ясных границ</h2>
+          </div>
+          <p class="section-lead">
+            Папка удерживает память. Роль и skill задают способ работы. Разрешения ограничивают действия. Версия сохраняет результат.
+          </p>
+        </div>
+
+        <div class="thesis-grid">
+          <article class="thesis thesis-main">
+            <span class="fig-label">тезис / 01</span>
+            <blockquote>
+              Сильная работа начинается не с выбора «самой умной модели», а с вопроса: что она знает о проекте, что ей разрешено и какой артефакт должен остаться.
+            </blockquote>
+            <div class="evidence-chip">02:30–04:35</div>
+          </article>
+
+          <article class="thesis attention-thesis">
+            <span class="fig-label">обратная сторона</span>
+            <h3>Бюджет внимания</h3>
+            <p>Рутины становится меньше. Материала для проверки, понимания и новых решений — больше.</p>
+            <div class="attention-meter" aria-label="Нагрузка смещается от рутины к проверке">
+              <span style="--meter: 30%">рутина</span>
+              <span style="--meter: 78%">проверка</span>
+              <span style="--meter: 92%">решения</span>
+            </div>
+          </article>
+        </div>
+
+        <section class="glossary-surface" aria-labelledby="glossaryTitle">
+          <div class="surface-head">
+            <div>
+              <span class="fig-label">словарь / evidence first</span>
+              <h3 id="glossaryTitle">Определения разговора</h3>
+            </div>
+            <p>«Редакторское уточнение» отделено от формулировок, прямо данных в диалоге.</p>
+          </div>
+          <div id="definitionGrid" class="definition-grid"></div>
+        </section>
+      </section>
+
+      <section class="section" id="concepts">
+        <div class="section-intro">
+          <span class="section-number">01</span>
+          <div>
+            <p class="eyebrow">архитектура мышления</p>
+            <h2>Четырнадцать узлов агентной работы</h2>
+          </div>
+          <p class="section-lead">
+            Каждый узел привязан к таймкоду. Связи отмечают не последовательность речи, а рабочие зависимости.
+          </p>
+        </div>
+
+        <div class="concept-layout">
+          <div class="concept-map" aria-label="Сеть связанных концепций">
+            <div class="map-axis axis-x" aria-hidden="true"></div>
+            <div class="map-axis axis-y" aria-hidden="true"></div>
+            <div id="conceptMap" class="concept-map-nodes"></div>
+          </div>
+          <div class="concept-index-wrap">
+            <label class="search-label" for="conceptSearch">Фильтр концепций</label>
+            <input id="conceptSearch" type="search" placeholder="например: память, skill, GitHub" autocomplete="off" />
+            <div id="conceptList" class="concept-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="programs">
+        <div class="section-intro">
+          <span class="section-number">02</span>
+          <div>
+            <p class="eyebrow">не смешивать уровни</p>
+            <h2>Модели, программы, платформы и коннекторы</h2>
+          </div>
+          <p class="section-lead">
+            Категория важнее бренда: модель думает, программа действует, платформа хранит данные, коннектор связывает поверхности.
+          </p>
+        </div>
+
+        <div id="programFilters" class="filter-rail" aria-label="Фильтр инструментов"></div>
+        <div id="programList" class="program-list"></div>
+      </section>
+
+      <section class="section" id="practice">
+        <div class="section-intro">
+          <span class="section-number">03</span>
+          <div>
+            <p class="eyebrow">из разговора в работу</p>
+            <h2>Практические сценарии</h2>
+          </div>
+          <p class="section-lead">
+            Каждый сценарий начинается с обратимого теста, ограниченной поверхности и понятной проверки.
+          </p>
+        </div>
+        <div id="useCaseGrid" class="use-case-grid"></div>
+      </section>
+
+      <section class="section homework-section" id="homework">
+        <div class="section-intro">
+          <span class="section-number">04</span>
+          <div>
+            <p class="eyebrow">минимальный маршрут / 34 минуты</p>
+            <h2>Домашка: от папки до голосового брифа</h2>
+          </div>
+          <div class="progress-readout" aria-live="polite">
+            <span id="progressCount">0 / 7</span>
+            <span class="progress-track"><span id="progressBar"></span></span>
+          </div>
+        </div>
+
+        <div id="homeworkList" class="homework-list"></div>
+
+        <section class="deep-challenges" aria-labelledby="deepTitle">
+          <div class="surface-head">
+            <div>
+              <span class="fig-label">optional / deeper</span>
+              <h3 id="deepTitle">Углублённые эксперименты</h3>
+            </div>
+          </div>
+          <div id="deepChallengeGrid" class="deep-grid"></div>
+        </section>
+      </section>
+
+      <section class="section" id="evidence">
+        <div class="section-intro">
+          <span class="section-number">05</span>
+          <div>
+            <p class="eyebrow">57 минут / смысловые участки</p>
+            <h2>Таймлайн доказательств</h2>
+          </div>
+          <p class="section-lead">
+            Шумовые интервалы помечены отдельно; их смысл не реконструировался.
+          </p>
+        </div>
+        <div id="timeline" class="timeline"></div>
+
+        <aside id="privacyNote" class="privacy-note"></aside>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>agent_mode/01</span>
+      <span>MacWhisper · 637 segments · source-fidelity pass</span>
+      <a href="#top">наверх ↑</a>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
